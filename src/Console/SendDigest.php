@@ -101,8 +101,10 @@ class SendDigest extends Command
 
         if ($intervalName === 'weekly') {
             $time = Carbon::now()->subDays(7);
-        } else {
+        }else if ($intervalName === 'daily') {
             $time = Carbon::now()->subDays(1);
+        } else {
+            $time = Carbon::now()->subDays(int($intervalName);
         }
 
         $this->info('Looking at discussions after ' . $time->toDateTimeString());
