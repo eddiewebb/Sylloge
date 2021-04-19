@@ -166,6 +166,7 @@ class SendDigest extends Command
             return;
         }
 
+        //TODO use pretty mail
         $this->views->addNamespace('sylloge', realpath(__DIR__ . '/../../resources/views/email'));
 
         $settings = app(SettingsRepositoryInterface::class);
@@ -178,7 +179,7 @@ class SendDigest extends Command
             'content' => $content,
             'primaryColor' => $settings->get('theme_primary_color'),
             'secondaryColor' => $settings->get('theme_secondary_color'),
-            'baseUrl' => $this->url,
+            'baseUrl' => $this->url->to('forum')->path(''),
             'forumTitle' => $title,
             'forumLogo' => $logoPath ? $this->url->to('forum')->path('assets/'.$logoPath) : null,
             'adminMessage' => $settings->get('kyrne-sylloge.admin_message'),
