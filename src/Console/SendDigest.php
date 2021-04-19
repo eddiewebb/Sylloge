@@ -104,7 +104,8 @@ class SendDigest extends Command
         }else if ($intervalName === 'daily') {
             $time = Carbon::now()->subDays(1);
         } else {
-            $time = Carbon::now()->subDays(int($intervalName);
+             $this->info('custom timeframe');
+            $time = Carbon::now()->subDays($intervalName);
         }
 
         $this->info('Looking at discussions after ' . $time->toDateTimeString());
@@ -115,7 +116,6 @@ class SendDigest extends Command
             ->where('discussions.comment_count', '>', 1)
             ->where('discussions.is_private', 0)
             ->whereDate('discussions.created_at', '>', $time);
-
         $count = $query->count();
 
         if ($count == 0) {
@@ -157,10 +157,10 @@ class SendDigest extends Command
         } else {
             // Users who have daily enabled will never get the weekly
             // digest, but will get a digest on the same day the weekly's do
-            $users->where('digest_enabled', 1)
-                ->where('is_email_confirmed', 1);
+            $users->where('digest_enabled',1)
+                ->where('is_email_confirmed',1);
         }
-
+        
         if ($users->count() == 0) {
             $this->info('No users to send the ' .$intervalName . ' digest to. Cancelling...');
             return;
