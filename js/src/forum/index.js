@@ -6,6 +6,7 @@ import SignUpModal from 'flarum/components/SignUpModal';
 import SettingsPage from 'flarum/components/SettingsPage';
 import FieldSet from 'flarum/components/FieldSet';
 import ItemList from 'flarum/utils/ItemList';
+import Stream from 'flarum/utils/Stream'
 
 import User from 'flarum/models/User';
 import Model from 'flarum/Model';
@@ -14,8 +15,7 @@ app.initializers.add('kyrne-sylloge', () => {
   User.prototype.digestEnabled = Model.attribute('digestEnabled');
 
   extend(SignUpModal.prototype, 'init', function () {
-
-    this.getDigest = m.prop(false);
+    this.getDigest = Stream(false);
   });
 
   extend(SignUpModal.prototype, 'fields', function (items) {
@@ -49,11 +49,14 @@ app.initializers.add('kyrne-sylloge', () => {
           Dropdown.component({
             buttonClassName: 'Button',
             label: options[app.session.user.digestEnabled()],
-            children: options.map((value, i) => {
+            
+          },options.map((value, i) => {
               const active = app.session.user.digestEnabled() === i;
 
               return Button.component({
-                children: value,
+                text: value,
+                title:value,
+                label: value,
                 icon: active ? 'fas fa-check' : true,
                 onclick: () => {
                   app.session.user.save({
@@ -61,22 +64,20 @@ app.initializers.add('kyrne-sylloge', () => {
                   })
                 },
                 active,
-              });
-            }),
-          }),
+              },value);
+            })),
           -10
         );
 
         return items;
       };
 
-    items.add(
-      'digest',
-      FieldSet.component({
-        label: app.translator.trans('kyrne-sylloge.forum.settings.label'),
-        className: 'Settings-account',
-        children: digestItems().toArray(),
-      }), 1
-    )
+      items.add(
+        'digest',
+        FieldSet.component({
+          label: app.translator.trans('kyrne-sylloge.forum.settings.label'),
+          className: 'Settings-account',
+        },digestItems().toArray()), 1
+      );
   });
 });

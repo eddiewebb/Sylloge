@@ -9,8 +9,8 @@
     "type": "flarum-extension",
     "license": "GPL-3.0-or-later",
     "require": {
-        "flarum/core": "^0.1.0-beta-13",
-        "fof/console": "^0.5.3",
+        "flarum/core": "^0.1.0-beta-16",
+        "fof/console": "^0.7.0",
         "kyrne/ext-core": "*@dev"
     },
     "authors": [
@@ -18,6 +18,11 @@
             "name": "Charlie K",
             "email": "charlie.k@redevs.org",
             "role": "Developer"
+        },
+        {
+            "name": "Eddie Webbinaro",
+            "email": "eddie@weebinaro.dev",
+            "role": "Updater"
         }
     ],
     "autoload": {

@@ -27,10 +27,9 @@ class ConsoleProvider extends AbstractServiceProvider
 
         // Force registering the Schedule as singleton.
 
-        $this->app->register(Console::class);
+        $this->app->bind(Console::class);
 
         $this->app->resolving(Schedule::class, function (Schedule $schedule) {
-
             $schedule->command('sylloge:send --interval weekly')
                 ->weeklyOn(1, '8:00')
                 ->onOneServer();

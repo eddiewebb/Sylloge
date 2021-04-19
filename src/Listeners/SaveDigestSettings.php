@@ -13,6 +13,7 @@
 namespace Kyrne\Sylloge\Listeners;
 
 use Flarum\User\Event\Saving;
+use Illuminate\Support\Arr;
 
 class SaveDigestSettings
 {
@@ -21,7 +22,7 @@ class SaveDigestSettings
      */
     public function handle(Saving $event)
     {
-        $data = array_get($event->data, 'attributes.digestEnabled');
+        $data = Arr::get($event->data, 'attributes.digestEnabled');
         if (!$event->user->exists) {
             if ($data) {
                 $event->user->digest_enabled = 2;
